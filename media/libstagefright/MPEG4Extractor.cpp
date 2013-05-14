@@ -286,18 +286,6 @@ static const char *FourCC2MIME(uint32_t fourcc) {
         case FOURCC('a', 'v', 'c', '1'):
             return MEDIA_MIMETYPE_VIDEO_AVC;
 
-       #ifdef DOLBY_UDC
-        case FOURCC('a', 'c', '-', '3'):
-            #if defined (DEBUG_LOG_DDP_DECODER_EXTRA)
-            ALOGE("@DDP Set AC3 mimetype");
-            #endif
-            return MEDIA_MIMETYPE_AUDIO_AC3;
-        case FOURCC('e', 'c', '-', '3'):
-            #if defined (DEBUG_LOG_DDP_DECODER_EXTRA)
-            ALOGE("@DDP Set EAC3 mimetype");
-            #endif
-            return MEDIA_MIMETYPE_AUDIO_EC3;
-        #endif //DOLBY_UDC
         default:
             CHECK(!"should not be here.");
             #ifdef DOLBY_UDC
@@ -972,10 +960,6 @@ status_t MPEG4Extractor::parseChunk(off64_t *offset, int depth) {
         case FOURCC('m', 'p', '4', 'a'):
         case FOURCC('s', 'a', 'm', 'r'):
         case FOURCC('s', 'a', 'w', 'b'):
-        #ifdef DOLBY_UDC
-        case FOURCC('a', 'c', '-', '3'):
-        case FOURCC('e', 'c', '-', '3'):
-        #endif //DOLBY_UDC
         {
             uint8_t buffer[8 + 20];
             if (chunk_data_size < (ssize_t)sizeof(buffer)) {
